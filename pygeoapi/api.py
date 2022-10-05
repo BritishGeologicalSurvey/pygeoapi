@@ -1526,7 +1526,7 @@ class API:
                     'title': 'items (prev)',
                     'href': '{}?f={}&offset={}{}'
                     .format(
-                        uri, F_JSON, prev, serialized_query_params)
+                        uri, request.format, prev, serialized_query_params)
                 })
 
         if len(content['features']) == limit:
@@ -1538,7 +1538,7 @@ class API:
                     'title': 'items (next)',
                     'href': '{}?f={}&offset={}{}'
                     .format(
-                        uri, F_JSON, next_, serialized_query_params)
+                        uri, request.format, next_, serialized_query_params)
                 })
 
         content['links'].append(
