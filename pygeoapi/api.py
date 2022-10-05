@@ -1524,9 +1524,9 @@ class API:
                     'type': 'application/geo+json',
                     'rel': 'prev',
                     'title': 'items (prev)',
-                    'href': '{}?offset={}{}'
+                    'href': '{}?f={}&offset={}{}'
                     .format(
-                        uri, prev, serialized_query_params)
+                        uri, F_JSON, prev, serialized_query_params)
                 })
 
         if len(content['features']) == limit:
@@ -1536,9 +1536,9 @@ class API:
                     'type': 'application/geo+json',
                     'rel': 'next',
                     'title': 'items (next)',
-                    'href': '{}?offset={}{}'
+                    'href': '{}?f={}&offset={}{}'
                     .format(
-                        uri, next_, serialized_query_params)
+                        uri, F_JSON, next_, serialized_query_params)
                 })
 
         content['links'].append(

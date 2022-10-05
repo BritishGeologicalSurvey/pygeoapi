@@ -670,7 +670,7 @@ def test_get_collection_items(config, api_):
     assert links[1]['rel'] == 'alternate'
     assert '/collections/obs/items?f=html' in links[2]['href']
     assert links[2]['rel'] == 'alternate'
-    assert '/collections/obs/items?offset=2&limit=2' in links[3]['href']
+    assert '/collections/obs/items?f=json&offset=2&limit=2' in links[3]['href']
     assert links[3]['rel'] == 'next'
     assert '/collections/obs' in links[4]['href']
     assert links[4]['rel'] == 'collection'
@@ -697,7 +697,7 @@ def test_get_collection_items(config, api_):
     assert links[1]['rel'] == 'alternate'
     assert '/collections/obs/items?f=html' in links[2]['href']
     assert links[2]['rel'] == 'alternate'
-    assert '/collections/obs/items?offset=0' in links[3]['href']
+    assert '/collections/obs/items?f=json&offset=0' in links[3]['href']
     assert links[3]['rel'] == 'prev'
     assert '/collections/obs' in links[4]['href']
     assert links[4]['rel'] == 'collection'
@@ -723,10 +723,10 @@ def test_get_collection_items(config, api_):
     assert '/collections/obs/items?f=html&limit=1&bbox=-180,90,180,90' in \
         links[2]['href']
     assert links[2]['rel'] == 'alternate'
-    assert '/collections/obs/items?offset=0&limit=1&bbox=-180,90,180,90' \
+    assert '/collections/obs/items?f=json&offset=0&limit=1&bbox=-180,90,180,90' \
         in links[3]['href']
     assert links[3]['rel'] == 'prev'
-    assert '/collections/obs/items?offset=2&limit=1&bbox=-180,90,180,90' \
+    assert '/collections/obs/items?f=json&offset=2&limit=1&bbox=-180,90,180,90' \
         in links[4]['href']
     assert links[4]['rel'] == 'next'
     assert '/collections/obs' in links[5]['href']
