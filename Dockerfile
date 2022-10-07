@@ -86,6 +86,7 @@ ENV TZ=${TZ} \
     DEB_BUILD_DEPS="\
       gcc-aarch64-linux-gnu \
       curl \
+      python3-dev \
       software-properties-common \
       unzip" \
     DEB_PACKAGES="\
