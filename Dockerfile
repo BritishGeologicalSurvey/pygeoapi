@@ -84,6 +84,7 @@ ENV TZ=${TZ} \
     LANG=${LANG} \
     DEBIAN_FRONTEND="noninteractive" \
     DEB_BUILD_DEPS="\
+      gcc-aarch64-linux-gnu \
       curl \
       software-properties-common \
       unzip" \
