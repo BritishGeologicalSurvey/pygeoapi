@@ -1157,7 +1157,7 @@ def generate(ctx, config_file, output_file, format_='yaml'):
     pretty_print = s['server'].get('pretty_print', False)
 
     if format_ == 'yaml':
-        content = yaml.safe_dump(get_oas(s), default_flow_style=False)
+        content = yaml.dump(get_oas(s), default_flow_style=False)
     else:
         content = to_json(get_oas(s), pretty=pretty_print)
 
