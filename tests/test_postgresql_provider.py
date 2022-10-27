@@ -290,7 +290,8 @@ def test_get_fields(config):
     assert provider.get_fields() == expected_fields
     assert provider.fields == expected_fields  # API uses .fields attribute
     # properties are the exposed fields except for the id unless set in config
-    assert set(provider.properties) == set(expected_fields.keys()) - set([provider.id_field])
+    fields_minus_id = set(expected_fields.keys()) - set([provider.id_field])
+    assert set(provider.properties) == fields_minus_id
 
 
 def test_instantiation(config):
