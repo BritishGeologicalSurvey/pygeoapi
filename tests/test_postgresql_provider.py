@@ -121,9 +121,10 @@ def test_query_with_config_properties(config):
     No properties should be returned that are not requested.
     Note that not all requested properties have to exist in the query result.
     """
-    config.update(
-        {'properties': ['name', 'waterway', 'width', 'does_not_exist']})
+    properties_subset = ['name', 'waterway', 'width', 'does_not_exist']
+    config.update({'properties': properties_subset})
     provider = PostgreSQLProvider(config)
+    assert provider.properties == properties_subset
     result = provider.query()
     feature = result.get('features')[0]
     properties = feature.get('properties', None)
@@ -288,6 +289,9 @@ def test_get_fields(config):
     # Assert
     assert provider.get_fields() == expected_fields
     assert provider.fields == expected_fields  # API uses .fields attribute
+    # properties are the exposed fields except for the id unless set in config
+    fields_minus_id = set(expected_fields.keys()) - set([provider.id_field])
+    assert set(provider.properties) == fields_minus_id
 
 
 def test_instantiation(config):

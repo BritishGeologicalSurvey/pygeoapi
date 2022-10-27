@@ -1469,7 +1469,7 @@ class API:
         LOGGER.debug('Processing filter-lang parameter')
         filter_lang = request.params.get('filter-lang')
         # Currently only cql-text is handled, but it is optional
-        if filter_lang is not None and filter_lang != 'cql-text':
+        if filter_lang not in [None, 'cql-text']:
             msg = 'Invalid filter language'
             return self.get_exception(
                 400, headers, request.format, 'InvalidParameterValue', msg)
@@ -1886,7 +1886,7 @@ class API:
                     400, headers, request.format,
                     'InvalidParameterValue', msg)
         else:
-            LOGGER.debug('processing ElasticSearch CQL_JSON data')
+            LOGGER.debug('processing Elasticsearch CQL_JSON data')
             try:
                 filter_ = CQLModel.parse_raw(data)
             except Exception as err:
@@ -1985,7 +1985,7 @@ class API:
             LOGGER.debug('Creating item')
             try:
                 identifier = p.create(request.data)
-            except ProviderInvalidDataError as err:
+            except (ProviderInvalidDataError, TypeError) as err:
                 msg = str(err)
                 return self.get_exception(
                     400, headers, request.format, 'InvalidParameterValue', msg)
@@ -1999,7 +1999,7 @@ class API:
             LOGGER.debug('Updating item')
             try:
                 _ = p.update(identifier, request.data)
-            except ProviderGenericError as err:
+            except (ProviderInvalidDataError, TypeError) as err:
                 msg = str(err)
                 return self.get_exception(
                     400, headers, request.format, 'InvalidParameterValue', msg)
@@ -2235,6 +2235,12 @@ class API:
                     500, headers, format_, 'InvalidParameterValue', msg)
 
         query_args['bbox'] = bbox
+
+        LOGGER.debug('Processing bbox-crs parameter')
+
+        bbox_crs = request.params.get('bbox-crs')
+        if bbox_crs is not None:
+            query_args['bbox_crs'] = bbox_crs
 
         LOGGER.debug('Processing datetime parameter')
 

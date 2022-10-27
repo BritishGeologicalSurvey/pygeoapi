@@ -100,6 +100,10 @@ class PostgreSQLProvider(BaseProvider):
         self._engine, self.table_model = self._get_engine_and_table_model()
         LOGGER.debug('DB connection: {}'.format(repr(self._engine.url)))
         self.fields = self.get_fields()
+        # If properties not set in config expose all fields except for the id
+        if not self.properties:
+            self.properties = list(self.fields.keys())
+            self.properties.remove(self.id_field)
 
     def query(self, offset=0, limit=10, resulttype='results',
               bbox=[], datetime_=None, properties=[], sortby=[],
@@ -250,7 +254,8 @@ class PostgreSQLProvider(BaseProvider):
             engine = create_engine(
                 conn_str,
                 connect_args={'client_encoding': 'utf8',
-                              'application_name': 'pygeoapi'})
+                              'application_name': 'pygeoapi'},
+                pool_pre_ping=True)
             _ENGINE_STORE[engine_store_key] = engine
 
         # Reuse table model if one exists
