@@ -100,6 +100,10 @@ class PostgreSQLProvider(BaseProvider):
         self._engine, self.table_model = self._get_engine_and_table_model()
         LOGGER.debug('DB connection: {}'.format(repr(self._engine.url)))
         self.fields = self.get_fields()
+        # If properties not set in config expose all fields except for the id
+        if not self.properties:
+            self.properties = list(self.fields.keys())
+            self.properties.remove(self.id_field)
 
     def query(self, offset=0, limit=10, resulttype='results',
               bbox=[], datetime_=None, properties=[], sortby=[],
